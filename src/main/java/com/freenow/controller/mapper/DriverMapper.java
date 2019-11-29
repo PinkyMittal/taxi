@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.freenow.datatransferobject.CarDTO;
 import com.freenow.datatransferobject.DriverDTO;
 import com.freenow.domainobject.DriverDO;
 import com.freenow.domainvalue.GeoCoordinate;
@@ -25,7 +26,8 @@ public class DriverMapper
             .setUsername(driverDO.getUsername());
         
         if(driverDO.getCarDO()!=null){
-        	driverDTOBuilder.setCarDTO(CarMapper.makeCarDTO(driverDO.getCarDO()));
+        	CarDTO makeCarDTO = CarMapper.makeCarDTO(driverDO.getCarDO());
+        	driverDTOBuilder.setCarDTO(makeCarDTO);
         }
         GeoCoordinate coordinate = driverDO.getCoordinate();
         if (coordinate != null)
@@ -33,7 +35,8 @@ public class DriverMapper
             driverDTOBuilder.setCoordinate(coordinate);
         }
 
-        return driverDTOBuilder.createDriverDTO();
+        DriverDTO createDriverDTO = driverDTOBuilder.createDriverDTO();
+		return createDriverDTO;
     }
 
 

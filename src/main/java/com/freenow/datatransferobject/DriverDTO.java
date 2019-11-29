@@ -23,7 +23,12 @@ public class DriverDTO implements Comparable<DriverDTO>
     private GeoCoordinate coordinate;
 
     private CarDTO carDTO;
-    private DriverDTO()
+    
+   
+
+
+
+	private DriverDTO()
     {
     }
 
@@ -67,6 +72,10 @@ public class DriverDTO implements Comparable<DriverDTO>
     {
         return coordinate;
     }
+    
+    public CarDTO getCarDTO() {
+		return carDTO;
+	}
 
     public static class DriverDTOBuilder
     {

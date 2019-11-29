@@ -95,7 +95,7 @@ public class DriverController
     }
     
     @PatchMapping("/{driverId}")
-    public ResponseEntity<DriverDTO> selectOrDeselectCar(
+    public DriverDTO selectOrDeselectCar(
         @Valid @PathVariable long driverId, @RequestParam long carId, @RequestParam CarStatus action)
         throws ConstraintsViolationException, EntityNotFoundException, CarAlreadyInUseException, UserNotAvailable
     {
@@ -105,7 +105,7 @@ public class DriverController
         	driverDO=driverService.selectCar(driverDO, carDO);
         else 
         	driverDO=driverService.deSelectCar(driverDO, carDO);
-		return new ResponseEntity<>(DriverMapper.makeDriverDTO(driverDO),HttpStatus.ACCEPTED);
+		return DriverMapper.makeDriverDTO(driverDO);
     }
     
     @PostMapping("/search")

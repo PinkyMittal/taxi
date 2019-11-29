@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freenow.controller.mapper.CarMapper;
 import com.freenow.controller.mapper.DriverMapper;
+import com.freenow.dataaccessobject.CarRepository;
 import com.freenow.dataaccessobject.DriverRepository;
 import com.freenow.datatransferobject.CarDTO;
 import com.freenow.datatransferobject.DriverDTO;
@@ -36,9 +37,11 @@ public class DefaultDriverService implements DriverService {
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultDriverService.class);
 
 	private final DriverRepository driverRepository;
+	private final CarRepository carRepository;
 
-	public DefaultDriverService(final DriverRepository driverRepository) {
+	public DefaultDriverService(final DriverRepository driverRepository,final CarRepository carRepository) {
 		this.driverRepository = driverRepository;
+		this.carRepository = carRepository;
 	}
 
 	/**
@@ -128,6 +131,9 @@ public class DefaultDriverService implements DriverService {
 		} else {
 			driverDO.setCarDO(carDO);
 			carDO.setCarStatus(CarStatus.DESELECT);
+			carRepository.save(carDO);
+			driverRepository.save(driverDO);
+			
 		}
 		return driverDO;
 	}
@@ -139,6 +145,8 @@ public class DefaultDriverService implements DriverService {
 		if (driverDO.getCarDO() != null && driverDO.getCarDO().getId() == carDO.getId()) {
 			driverDO.setCarDO(null);
 			carDO.setCarStatus(CarStatus.SELECT);
+			carRepository.save(carDO);
+			driverRepository.save(driverDO);
 		}
 		return driverDO;
 
